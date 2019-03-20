@@ -1,4 +1,4 @@
-#!/usr/local/opt/tcl-tk/bin/wish
+#!/usr/bin/env wish
 
 package require Tk
 package require websocket
