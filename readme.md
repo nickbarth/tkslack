@@ -9,12 +9,7 @@ First grab a token from https://api.slack.com/custom-integrations/legacy-tokens 
 ```bash
 echo "xxx-1111-2222-3333-ABC" > ~/.tkslack # replace with your token
 brew cask install https://raw.githubusercontent.com/nickbarth/tkslack/master/tkslack.rb
-```
-
-Try it out: 
-
-```bash
-echo "xxx-1111-2222-3333-ABC" > ~/.tkslack # replace with your token
+# alternatively
 wish <(curl -s https://raw.githubusercontent.com/nickbarth/tkslack/master/main.tcl)
 ```
 
