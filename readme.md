@@ -18,7 +18,7 @@ echo "xxx-1111-2222-3333-ABC" > ~/.tkslack # replace with your token
 wish <(curl -s https://raw.githubusercontent.com/nickbarth/tkslack/master/main.tcl)
 ```
 
-![screenshot](https://raw.githubusercontent.com/nickbarth/tkslack/master/)
+![screenshot](https://raw.githubusercontent.com/nickbarth/tkslack/master/screenshot.png)
 
 ### Hotkeys 
 
