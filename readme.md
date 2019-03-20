@@ -1,6 +1,6 @@
 # tkslack
 
-A simple refined minimalist slacking experience.
+A refined minimalist slacking experience.
 
 ### Install
 
