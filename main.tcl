@@ -1,5 +1,6 @@
 #!/usr/bin/env wish
 
+package require Tk
 package require websocket
 package require http
 package require tls
