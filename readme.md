@@ -2,7 +2,7 @@
 
 A refined minimalist slacking experience.
 
-### Install
+### Run
 
 First grab a token from https://api.slack.com/custom-integrations/legacy-tokens then do this:
 
