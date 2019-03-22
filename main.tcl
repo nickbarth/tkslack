@@ -24,7 +24,7 @@ listbox .rfrm.channels -listvariable select_channels -borderwidth 0 -font $font 
 scrollbar .rfrm.channels_scroll -command {.rfrm.channels yview}
 
 # layout
-pack .lfrm -side left -fill both -expand 1
+pack .lfrm -side left -fill both -expand y
 pack .lfrm.log_scroll -side right -fill y
 pack .lfrm.chat -side bottom -fill both
 pack .lfrm.log -side left -fill both -expand y -anchor n
@@ -81,7 +81,7 @@ proc handler { sock type data } {
   switch -- $type {
     "connect" { puts "Connected on $sock" }
     "text" {
-      puts $data
+      # puts $data
       set json [json::json2dict $data]
       dict with json {
         if {$type == "message" && $channel == $current_id} {
@@ -91,6 +91,46 @@ proc handler { sock type data } {
       }
     }
   }
+}
+
+proc save_token {} {
+  global token token_file
+  set fp [open $token_file w]
+  puts $fp $token
+  close $fp
+}
+
+proc enter_token {} {
+  global font token_file token
+  set done 0
+
+  toplevel .twin
+  wm title .twin "Set Token"
+  wm resizable .twin 0 0
+  wm attributes .twin -topmost yes
+
+  frame .twin.frm
+  label .twin.frm.lbl -text "Enter your token: " -justify left
+  entry .twin.frm.txt -textvariable token -font $font -highlightthickness 0 -borderwidth 2 -foreground #222222 -background #dddddd -relief flat
+
+  button .twin.frm.okbtn -text "Save" -command { save_token; set done 1 } -padx 10
+  button .twin.frm.cancelbtn -text "Cancel" -command { set token ""; set done 1 } -padx 10
+
+  pack .twin.frm -fill both -padx 10 -pady 10
+  pack .twin.frm.lbl -side top -anchor nw
+  pack .twin.frm.txt -fill x -pady 10
+
+  pack .twin.frm.okbtn -side right
+  pack .twin.frm.cancelbtn -side right
+
+  focus .twin.frm.txt
+
+  bind .twin.frm.txt <Return> { save_token; set done 1 }
+  bind .twin.frm.txt <Escape> { set token ""; set done 1 }
+
+  vwait done
+  destroy .twin
+  return [expr {$token != ""}]
 }
 
 proc set_token {} {
@@ -107,15 +147,25 @@ proc set_token {} {
     return true
   }
 
+  if { [enter_token] } {
+    return true
+  }
+
   return false
 }
 
 proc connect {} {
-  global id sock
-  set data [request "https://slack.com/api/rtm.start?"]
-  set ws_url [dict get $data url]
-  set sock [websocket::open $ws_url handler]
-  set id [dict get [dict get $data self] id]
+  global id sock token_file
+  if {[catch {
+    set data [request "https://slack.com/api/rtm.start?"]
+    set ws_url [dict get $data url]
+    set sock [websocket::open $ws_url handler]
+    set id [dict get [dict get $data self] id]
+  }]} {
+    file delete $token_file
+    tk_messageBox -title "Invalid Token Error" -message "You require a valid file." -detail "Please get one from: https://api.slack.com/custom-integrations/legacy-tokens" -icon error
+    exit
+  }
 }
 
 proc socket_send { sock type channel text } {
@@ -136,7 +186,6 @@ proc get_messages { channel } {
 
   if {[dict get $data ok] == false} {
     tk_messageBox -title "Error" -message "Channel not found." -icon error
-    puts "Error - Channel not found: `${channel}`."
     return []
   }
 
@@ -262,7 +311,8 @@ proc initialize {} {
 
     focus .lfrm.chat
   } else {
-    tk_messageBox -title "Invalid Token Error" -message "You require a valid token file." -detail "Please add one http://safdasdf." -icon error
+    tk_messageBox -title "Invalid Token Error" -message "You require a valid file." -detail "Please get one from: https://api.slack.com/custom-integrations/legacy-tokens" -icon error
+    exit
   }
 }
 
