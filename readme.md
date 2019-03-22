@@ -7,10 +7,7 @@ A refined minimalist slacking experience.
 First grab a token from https://api.slack.com/custom-integrations/legacy-tokens then do this:
 
 ```bash
-echo "xxx-1111-2222-3333-ABC" > ~/.tkslack # replace with your token
-brew cask install https://raw.githubusercontent.com/nickbarth/tkslack/master/tkslack.rb
-
-# or alternatively
+# Requires Tcl/Tk 8.6.9 -- brew install tcl-tk
 wish <(curl -s https://raw.githubusercontent.com/nickbarth/tkslack/master/main.tcl)
 ```
 
