@@ -1,6 +1,6 @@
 # tkslack
 
-A refined minimalist slacking experience.
+A refined minimalist slacking experience for Tcl/Tk connoisseurs.
 
 ### Run
 
