@@ -107,7 +107,7 @@ proc enter_token {} {
   toplevel .twin
   wm title .twin "Set Token"
   wm resizable .twin 0 0
-  wm attributes .twin -topmost yes
+  wm transient .twin .
 
   frame .twin.frm
   label .twin.frm.lbl -text "Enter your token: " -justify left
