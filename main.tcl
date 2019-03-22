@@ -134,9 +134,14 @@ proc enter_token {} {
 }
 
 proc set_token {} {
-  global token_file token
+  global token_file token env
 
   if { $token != "" } {
+    return true
+  }
+
+  if { [info exists env(TKSLACK_TOKEN) ] } {
+    set token $env(TKSLACK_TOKEN)
     return true
   }
 
