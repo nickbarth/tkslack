@@ -361,5 +361,4 @@ bind .rfrm.channels <<ListboxSelect>> {
   focus .lfrm.chat
 }
 
-# init
 initialize
