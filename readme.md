@@ -2,12 +2,27 @@
 
 A refined minimalist slacking experience for tcl connoisseurs.
 
+### Dependencies
+
+Requires Tcl/Tk 8.6.9
+
+MacOS
+
+```
+brew install tcl-tk
+```
+
+Ubuntu
+
+```
+apt install tcl tk tcllib tcl-tls
+```
+
 ### Run
 
 First grab a token from https://api.slack.com/custom-integrations/legacy-tokens then do this:
 
 ```bash
-# Requires Tcl/Tk 8.6.9 -- brew install tcl-tk
 wish <(curl -s https://raw.githubusercontent.com/nickbarth/tkslack/master/main.tcl)
 ```
 
